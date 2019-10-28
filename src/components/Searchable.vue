@@ -9,7 +9,7 @@
                 <div class="row">
                     <div class="col-md-12 d-flex flex-wrap">
 
-                        <div v-for="command in search.command" :class=[{'col-md-6':command.hasBetween},{'col-md-3':!command.hasBetween}]>
+                        <div v-for="command in search.command" :class='setClass(command)'>
                             <div v-if="command.operator === 'string'" class="form-group">
                                 <label>{{command.label}}</label>
                                 <input class="form-control" v-model="search.query[command.key]"/>
@@ -150,6 +150,13 @@
                     linq.from(command.operatorClass.options)
                         .select(x => x.value)
                         .toArray()
+            },
+
+            setClass(command) {
+                if(command.hasBetween) {
+                    return 'col-md-6'
+                }
+                return 'col-md-3'
             }
         }
     }
