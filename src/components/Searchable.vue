@@ -7,15 +7,15 @@
 
             <div class="box-body">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12 d-flex flex-wrap">
 
-                        <div v-for="command in search.command">
-                            <div v-if="command.operator === 'string'" class="form-group col-md-3">
+                        <div v-for="command in search.command" :class=[{'col-md-6':command.hasBetween},{'col-md-3':!command.hasBetween}]>
+                            <div v-if="command.operator === 'string'" class="form-group">
                                 <label>{{command.label}}</label>
                                 <input class="form-control" v-model="search.query[command.key]"/>
                             </div>
 
-                            <div v-if="command.hasBetween" class="form-group col-md-6">
+                            <div v-if="command.hasBetween" class="form-group">
                                 <label>{{command.label}}</label>
 
                                 <div class="input-group date">
@@ -35,7 +35,7 @@
                                 </div>
                             </div>
 
-                            <div v-if="command.hasSelect" class="form-group col-md-3">
+                            <div v-if="command.hasSelect" class="form-group">
                                 <label>{{command.label}}</label>
                                 <select class="form-control"
                                         @click="command.operatorClass.fetch()"
@@ -45,7 +45,7 @@
                                 </select>
                             </div>
 
-                            <div v-if="command.hasCheckBox" class="form-group col-md-3">
+                            <div v-if="command.hasCheckBox" class="form-group">
                                 <label>
                                     {{command.label}}
                                     <input type="checkbox" @click="allCheck(command)"/>
@@ -63,7 +63,7 @@
                                 </div>
                             </div>
 
-                            <div v-if="command.hasRadioBox" class="form-group col-md-3">
+                            <div v-if="command.hasRadioBox" class="form-group ">
                                 <label>{{command.label}}</label>
                                 <div style="display: flex; flex-wrap: wrap;">
                                     <div class="mr10"
