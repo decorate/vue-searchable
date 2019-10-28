@@ -1,6 +1,6 @@
 {
   "name": "@team-decorate/vue-searchable",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "vue search support",
   "main": "dist/vue-searchable.common.js",
   "unpkg": "dist/vue-searchable.umd.js",
