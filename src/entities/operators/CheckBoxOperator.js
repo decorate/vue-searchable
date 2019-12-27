@@ -4,7 +4,9 @@ export default class CheckBoxOperator extends Fetch{
     constructor(command) {
         super(command, 'checkbox')
 
-        this.fetch()
+        if(this.data.fetch) {
+            this.fetch()
+        }
     }
 
     defaultOption() {

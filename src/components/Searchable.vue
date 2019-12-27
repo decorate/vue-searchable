@@ -48,8 +48,10 @@
                             <div v-if="command.hasCheckBox" class="form-group">
                                 <label>
                                     {{command.label}}
-                                    <input type="checkbox" @click="allCheck(command)"/>
+                                    <span v-if="command.data.all || command.data.allChecked">
+                                    <input :ref="`all_${command.operatorClass.key}`" type="checkbox" @click="allCheck(command)"/>
                                     全て
+                                    </span>
                                 </label>
                                 <div style="display: flex; flex-wrap: wrap;">
                                     <div class="mr10"
@@ -109,7 +111,8 @@
 
         data() {
             return {
-                search: new SearchService(this.$route)
+                search: new SearchService(this.$route),
+                allCheckRefs: []
             }
         },
 
@@ -129,12 +132,25 @@
             this.search.fill(this.searches, this.ignoreQuery)
         },
 
+        mounted() {
+            linq.from(this.search.command)
+                .where(x => x.data.hasOwnProperty('allChecked'))
+                .where(x => x.data.allChecked)
+                .select(x => {
+                    const ref = this.$refs['all_' + x.operatorClass.key]
+                    this.allCheckRefs.push(ref[0])
+                    ref[0].click()
+                })
+                .toArray()
+        },
+
         methods: {
             async send() {
                 this.$router.push({query: this.search.data()})
             },
 
             clear() {
+                linq.from(this.allCheckRefs).select(x => x.click()).toArray()
                 this.search.clear()
                 this.$router.push({query: this.search.data()})
             },

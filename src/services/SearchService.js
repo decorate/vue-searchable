@@ -22,7 +22,20 @@ export default class SearchService {
             .select(x => new SearchableCommand(x))
             .select(x => {
                 this.clears.push(x.key)
-                this.query = {...x.query, ...this.query}
+
+                if(x.key === 'checkbox') {
+                    const queryKey = Object.keys(x.query)[0]
+                    const arr = []
+                    if(!Array.isArray(this.query[queryKey])) {
+                        arr.push(this.query[queryKey])
+                    } else {
+                        arr.push(...this.query[queryKey])
+                    }
+                    this.query[queryKey] = Object.assign(arr, x.query[queryKey])
+
+                } else {
+                    this.query = {...x.query, ...this.query}
+                }
                 return x
             })
             .toArray()
@@ -38,9 +51,22 @@ export default class SearchService {
         linq.from(this.query)
             .where(x => !this.ignoreQuery.includes(x.key))
             .select(x => {
-                this.query[x.key] = ''
+
+                if(Array.isArray(x.value) || this.isCheckBox(x.key)) {
+                    this.query[x.key] = []
+                } else {
+                    this.query[x.key] = ''
+                }
             })
             .toArray()
+    }
+
+    isCheckBox(key) {
+        const c = linq.from(this.command)
+            .where(xs => xs.query[key])
+            .select(xs => xs.key).firstOrDefault(null)
+
+        return c === 'checkbox'
     }
 
 }

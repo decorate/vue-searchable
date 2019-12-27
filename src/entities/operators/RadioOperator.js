@@ -4,7 +4,9 @@ export default class RadioOperator extends Fetch{
     constructor(command) {
         super(command, 'radio')
 
-        this.fetch()
+        if(this.data.fetch) {
+            this.fetch()
+        }
     }
 
     defaultOption() {

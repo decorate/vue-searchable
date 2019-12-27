@@ -21,7 +21,7 @@ export default class Fetch {
             this.options = store.getters[getter.OBJECTS](this.storeKey)
             this.fetched = true
         } else {
-            this.options = this.defaultOption()
+            this.options = this.data.options || this.defaultOption()
         }
     }
 

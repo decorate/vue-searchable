@@ -115,13 +115,23 @@ describe('searchable test', () => {
                 {id: 1, name: 'ゴールド'},
                 {id: 2, name: 'シルバー'},
             ]}))
-        const prop = {checkbox: 'level'}
+        const prop = {checkbox: 'level', fetch: true}
 
         const wrap = create(prop)
         await wrap.vm.$nextTick()
 
         const inputs = wrap.findAll('input[name="level[]"]')
         expect(inputs.at(1).element.value).toBe("2")
+    })
+
+    it('checkbox route cache', async () => {
+        const prop = {checkbox: 'items', options: [{text: 'ok', value: 1}, {text: 'no', value: 2}]}
+        const wrap = create(prop)
+        wrap.vm.$route.query.items = 1
+        await wrap.vm.$nextTick()
+
+        const inputs = wrap.findAll('input[name="items[]"]')
+        expect(inputs.length).toBe(2)
     })
 
 })

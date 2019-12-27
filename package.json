@@ -9,6 +9,7 @@
     "dist/*.js"
   ],
   "scripts": {
+    "serve": "vue-cli-service serve",
     "build": "vue-cli-service build src/index.js --target lib --name vue-searchable",
     "test": "vue-cli-service test:unit tests/",
     "prepublishOnly": "npm run build"
@@ -44,7 +45,9 @@
     "vue": "^2.5.13",
     "vue-router": "^3.0.6",
     "vue-template-compiler": "^2.5.13",
-    "vuex": "^3.1.1"
+    "vuex": "^3.1.1",
+    "bootstrap": "^4.3.1",
+    "bootstrap-vue": "^2.0.3"
   },
   "browserslist": [
     "> 1%",
