@@ -26,9 +26,9 @@ export default class SearchService {
                 if(x.key === 'checkbox') {
                     const queryKey = Object.keys(x.query)[0]
                     const arr = []
-                    if(!Array.isArray(this.query[queryKey])) {
+                    if(!Array.isArray(this.query[queryKey]) && this.query[queryKey]) {
                         arr.push(this.query[queryKey])
-                    } else {
+                    } else if(this.query[queryKey]) {
                         arr.push(...this.query[queryKey])
                     }
                     this.query[queryKey] = Object.assign(arr, x.query[queryKey])
